@@ -3,6 +3,12 @@ import images from "./gallery-item.js";
 const imageContainer = document.querySelector(".js-gallery");
 const imageGallery = createGalleryImage(images);
 imageContainer.insertAdjacentHTML("afterbegin", imageGallery);
+const lightBox = document.querySelector(".lightbox");
+
+const lightBoxImage = document.querySelector(".lightbox__image");
+
+let closeBtn = document.querySelector(".lightbox__button");
+console.log(closeBtn);
 
 function createGalleryImage(images) {
   return images
@@ -25,9 +31,6 @@ function createGalleryImage(images) {
 }
 
 imageContainer.addEventListener("click", onClickToImage);
-const lightBox = document.querySelector("lightbox");
-
-const lightBoxImage = document.querySelector("lightbox__image");
 
 function onClickToImage(e) {
   e.preventDefault();
@@ -38,4 +41,15 @@ function onClickToImage(e) {
   lightBox.classList.add("is-open");
   lightBoxImage.src = e.target.dataset.source;
   lightBoxImage.alt = e.target.alt;
+}
+
+closeBtn.addEventListener("click", onCloseBtnClick);
+
+function onCloseBtnClick(e) {
+  if (e.target.nodeName === "IMG") {
+    return;
+  }
+  lightBox.classList.remove("is-open");
+  lightBoxImage.removeAttribute("src");
+  lightBoxImage.removeAttribute("alt");
 }
